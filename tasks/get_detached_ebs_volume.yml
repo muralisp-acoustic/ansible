@@ -1,0 +1,31 @@
+- set_fact: profile="{{item.0}}"
+- set_fact: region="{{item.1}}"
+- amazon.aws.ec2_vol_info:
+    profile: "{{profile}}"
+    region: "{{region}}"
+  register: vol_info
+
+
+- name: "Display volumes with available status with Jinja"
+  lineinfile:
+    line: |
+      {% for item in vol_info.volumes %}
+        {% if item.status == 'available' %}
+          {% if item.tags.Name is defined %}
+            {{item.id}},{{item.tags.Name}},{{item.zone}},{{profile}}
+          {% else %}
+            {{item.id}},"No Name",{{item.zone}},{{profile}}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    dest: "detached_ebs_report.csv"
+    insertafter: EOF
+
+- name: Remove empty lines from  file
+  lineinfile:
+    path: "detached_ebs_report.csv"
+    state: absent
+    regexp: '^\s*$'
+
+- name: Remove trailing spaces
+  command: sed -it 's/^ *//' detached_ebs_report.csv

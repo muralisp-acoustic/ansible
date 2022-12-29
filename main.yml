@@ -1,0 +1,43 @@
+---
+- name: "Get Detached EBS report"
+  hosts: 127.0.0.1
+  connection: local
+  gather_facts: False
+
+    # vars:
+    #report_file: "{{ lookup('ansible.builtin.env', 'AWS_PROFILE') }}_unused_ebs_report.csv"
+
+  tasks:
+    - include_vars:
+        file: config.yml
+        name: env    
+
+    - name: Remove file
+      ansible.builtin.file:
+        path: "detached_ebs_report.csv"
+        state: absent
+
+    - name: Touch the same file
+      ansible.builtin.file:
+        path: "detached_ebs_report.csv"
+        state: touch
+
+    - include_tasks: tasks/get_detached_ebs_volume.yml
+      with_cartesian: 
+        - "{{env.aws_accounts}}"
+        - "{{env.regions}}"
+
+#    - meta: end_play
+
+#    - name: "Display volumes with available status"
+#      lineinfile:
+#        line: |
+#          {% if item.tags.Name is defined %}
+#            {{item.id}},{{item.zone}},{{item.tags.Name}}
+#          {% else %}
+#            {{item.id}},{{item.zone}},"No Name"
+#          {% endif %}
+#        dest: "{{aws_account}}_report.csv"
+#        insertafter: EOF
+#      when: item.status == 'available'
+#      with_items: "{{vol_info.volumes}}"
