@@ -1,20 +1,20 @@
 ---
 aws_accounts:
-#  - prod-cis
-#  - dev-personalization
-#  - network-services
-#  - dev-content
-#  - dev-pi
-#  - dev-digital
-#  - dev-exchange
-#  - dev-commonservices
-#  - secops-poc
-#  - dev-cis
-#  - it-shared
-#  - dev-journey
-#  - sales-demo
-#  - develop-campaign
-#  - secops
+  - prod-cis
+  - dev-personalization
+  - network-services
+  - dev-content
+  - dev-pi
+  - dev-digital
+  - dev-exchange
+  - dev-commonservices
+  - secops-poc
+  - dev-cis
+  - it-shared
+  - dev-journey
+  - sales-demo
+  - develop-campaign
+  - secops
   - prod-shared
   - tealeaf
   - sharedqa
@@ -23,7 +23,7 @@ aws_accounts:
 regions:
   - us-east-1
   - eu-central-1
-#  - ca-central-1 
-#  - ap-south-1
-#  - ap-southeast-1
-#  - ap-southeast-2
+  - ca-central-1 
+  - ap-south-1
+  - ap-southeast-1
+  - ap-southeast-2
