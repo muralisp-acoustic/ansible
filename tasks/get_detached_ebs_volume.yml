@@ -12,9 +12,9 @@
       {% for item in vol_info.volumes %}
         {% if item.status == 'available' %}
           {% if item.tags.Name is defined %}
-            {{item.id}},{{item.tags.Name}},{{item.zone}},{{profile}}
+            {{item.id}},{{item.tags.Name}},{{item.size}},{{item.zone}},{{profile}}
           {% else %}
-            {{item.id}},"No Name",{{item.zone}},{{profile}}
+            {{item.id}},"No Name",{{item.size}},{{item.zone}},{{profile}}
           {% endif %}
         {% endif %}
       {% endfor %}
