@@ -16,9 +16,9 @@ if [ $? -eq 0 ]
 then
 	cd $git_repo_dir
         cp ~/.ansible_pass .
-	sudo docker run -v "${PWD}":/work:rw --rm ansible_from_ubuntu:latest ansible-vault decrypt /work/.aws/credentials --vault-password-file /work/.ansible_pass
+	sudo docker run -v "${PWD}":/work:rw --rm public.ecr.aws/f4q9n3z9/ansible:latest ansible-vault decrypt /work/.aws/credentials --vault-password-file /work/.ansible_pass
 	sudo docker run --env AWS_SHARED_CREDENTIALS_FILE=/work/.aws/credentials -v "${PWD}":/work:rw -v ~/.ansible/roles:/root/.ansible/roles -v ~/.ssh:/root/.ssh:ro --rm ansible_from_ubuntu:latest ansible-playbook $playbook_name $*
-	sudo docker run -v "${PWD}":/work:rw --rm ansible_from_ubuntu:latest ansible-vault encrypt /work/.aws/credentials --vault-password-file /work/.ansible_pass
+	sudo docker run -v "${PWD}":/work:rw --rm public.ecr.aws/f4q9n3z9/ansible:latest ansible-vault encrypt /work/.aws/credentials --vault-password-file /work/.ansible_pass
 	cp *.csv ../
 	git clean -f -d
 else
