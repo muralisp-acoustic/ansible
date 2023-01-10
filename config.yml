@@ -1,5 +1,5 @@
-#---
-#aws_accounts:
+---
+aws_accounts:
 #  - prod-cis
 #  - dev-personalization
 #  - network-services
