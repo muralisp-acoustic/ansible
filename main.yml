@@ -4,29 +4,30 @@
   connection: local
   gather_facts: False
 
-    # vars:
-    #report_file: "{{ lookup('ansible.builtin.env', 'AWS_PROFILE') }}_unused_ebs_report.csv"
+  vars:
+    playbook_purpose: "detached_ebs_report"
 
   tasks:
     - include_vars:
         file: config.yml
-        name: env    
+        name: env
 
     - name: Remove file
       ansible.builtin.file:
-        path: "detached_ebs_report.csv"
+        path: "{{playbook_purpose}}.csv"
         state: absent
 
     - name: Touch the same file
       ansible.builtin.file:
-        path: "detached_ebs_report.csv"
+        path: "{{playbook_purpose}}.csv"
         state: touch
 
     - include_tasks: tasks/get_detached_ebs_volume.yml
-      with_cartesian: 
+      with_cartesian:
         - "{{env.aws_accounts}}"
         - "{{env.regions}}"
 
+    - include_tasks: tasks/send_mail.yml
 #    - meta: end_play
 
 #    - name: "Display volumes with available status"

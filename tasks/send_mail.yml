@@ -1,0 +1,11 @@
+- name: Sending report throught an e-mail
+  community.general.mail:
+    host: mailrelay-adm-ue1.prod.awspr
+    port: 25
+    to: murali.sp@acoustic.com
+    subject: "Ansible Report - {{playbook_purpose}}"
+    body: Please find the attached report for "{{playbook_purpose}}"
+      #    cc: Charlie Root <root@localhost>
+    attach:
+    - "{{playbook_purpose}}.csv"
+  delegate_to: localhost
