@@ -10,8 +10,8 @@ git_repo_dir=`echo $git_repo | grep -o "/.*\.git" | sed -n -e 's/\///' -e 's/\.g
 shift
 playbook_name=$1
 shift
-git clone $git_repo
 version=`cat settings.ini |grep ansible_version | awk -F':' '{print $2}'`
+git clone $git_repo
 ## See if git clone is successful
 if [ $? -eq 0 ]
 then
